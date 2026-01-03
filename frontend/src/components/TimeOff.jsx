@@ -1,9 +1,10 @@
 import React from 'react'
-import { Search, Plus, User, Check, X } from "lucide-react";
+import { Search, Plus, User } from "lucide-react";
 import Layout from "../ui/Layout"; 
 import Button from "../ui/Button"; 
 import Input from "../ui/Input"; 
 import { Select, SelectTrigger, SelectValue, SelectContent, SelectItem } from "../ui/Select";
+
 const leaveRequests = [
   {
     id: 1,
@@ -11,7 +12,6 @@ const leaveRequests = [
     startDate: "2024-01-15",
     endDate: "2024-01-17",
     leaveType: "paid",
-    status: "approved",
   },
   {
     id: 2,
@@ -19,7 +19,6 @@ const leaveRequests = [
     startDate: "2024-01-15",
     endDate: "2024-01-16",
     leaveType: "sick",
-    status: "approved",
   },
   {
     id: 3,
@@ -27,7 +26,6 @@ const leaveRequests = [
     startDate: "2024-01-20",
     endDate: "2024-01-22",
     leaveType: "paid",
-    status: "pending",
   },
   {
     id: 4,
@@ -35,7 +33,6 @@ const leaveRequests = [
     startDate: "2024-01-18",
     endDate: "2024-01-18",
     leaveType: "sick",
-    status: "pending",
   },
   {
     id: 5,
@@ -43,9 +40,9 @@ const leaveRequests = [
     startDate: "2024-01-25",
     endDate: "2024-01-26",
     leaveType: "paid",
-    status: "pending",
   },
 ];
+
 const TimeOff = () => {
   return (
      <Layout>
@@ -91,8 +88,6 @@ const TimeOff = () => {
               <th>Start Date</th>
               <th>End Date</th>
               <th>Leave Type</th>
-              <th>Status</th>
-              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -119,27 +114,6 @@ const TimeOff = () => {
                     {request.leaveType === "paid" ? "Paid" : "Sick"}
                   </span>
                 </td>
-                <td>
-                  <span
-                    className={`status-badge ${
-                      request.status === "approved" ? "status-approved" : "status-pending"
-                    }`}
-                  >
-                    {request.status === "approved" ? "Approved" : "Pending"}
-                  </span>
-                </td>
-                <td>
-                  {request.status === "pending" && (
-                    <div className="flex gap-2">
-                      <Button className="h-8 w-8 bg-success hover:bg-success/90 p-2">
-                        <Check className="h-4 w-4" />
-                      </Button>
-                      <Button className="h-8 w-8 bg-red-500 hover:bg-red-600 p-2">
-                        <X className="h-4 w-4" />
-                      </Button>
-                    </div>
-                  )}
-                </td>
               </tr>
             ))}
           </tbody>
@@ -149,4 +123,4 @@ const TimeOff = () => {
   )
 }
 
-export default TimeOff
+export default TimeOff;

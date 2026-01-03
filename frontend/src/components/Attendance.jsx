@@ -12,7 +12,6 @@ const attendanceRecords = [
     checkOut: "18:30",
     workHours: "8.5h",
     extraHours: "0.5h",
-    status: "complete",
   },
   {
     id: 2,
@@ -21,7 +20,6 @@ const attendanceRecords = [
     checkOut: "17:15",
     workHours: "8.5h",
     extraHours: "0.5h",
-    status: "complete",
   },
   {
     id: 3,
@@ -30,7 +28,6 @@ const attendanceRecords = [
     checkOut: "18:00",
     workHours: "8.75h",
     extraHours: "0.75h",
-    status: "complete",
   },
   {
     id: 4,
@@ -39,7 +36,6 @@ const attendanceRecords = [
     checkOut: null,
     workHours: "0h",
     extraHours: "0h",
-    status: "absent",
   },
   {
     id: 5,
@@ -48,7 +44,6 @@ const attendanceRecords = [
     checkOut: "17:30",
     workHours: "9h",
     extraHours: "1h",
-    status: "complete",
   },
   {
     id: 6,
@@ -57,9 +52,9 @@ const attendanceRecords = [
     checkOut: "18:00",
     workHours: "9h",
     extraHours: "1h",
-    status: "complete",
   },
 ];
+
 export default function Attendance() {
   return (
     <Layout>
@@ -103,7 +98,6 @@ export default function Attendance() {
               <th>Check Out</th>
               <th>Work Hours</th>
               <th>Extra Hours</th>
-              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -121,15 +115,6 @@ export default function Attendance() {
                 <td className="text-primary">{record.checkOut || "-"}</td>
                 <td className="text-primary">{record.workHours}</td>
                 <td className="text-success">{record.extraHours}</td>
-                <td>
-                  <span
-                    className={`status-badge ${
-                      record.status === "complete" ? "status-complete" : "status-absent"
-                    }`}
-                  >
-                    {record.status === "complete" ? "Complete" : "Absent"}
-                  </span>
-                </td>
               </tr>
             ))}
           </tbody>

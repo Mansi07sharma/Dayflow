@@ -55,6 +55,7 @@ const userSchema = new mongoose.Schema(
     nationality : {type : String},
     martialstatus : {type : String},
     dateOfBirth : {type : Date},
+    isEmailverified: { type: Boolean, default: false },
 
     // Bank & IDs
     panNo: { type: String },

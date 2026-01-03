@@ -12,6 +12,7 @@ import {
   LeaveBalance,
   LeaveStatus
 } from "../models/sample.model.js";
+import { sendVerificationEmail } from "./email.js";
 
 // Centralized JWT secret
 const JWT_SECRET = process.env.JWT_SECRET || "Sample_Secret_Key_Change_In_Production";
@@ -39,49 +40,49 @@ function authorize(req, res) {
 
 
 // Company account creation
-export async function create_company_account(request, response) {
-  try {
-    const { name, email, phone, address, registrationNumber } = request.body;
+// export async function create_company_account(request, response) {
+//   try {
+//     const { name, email, phone, address, registrationNumber } = request.body;
 
-    // Check if company already exists
-    const existingCompany = await Company.findOne({ 
-      $or: [{ email }, { registrationNumber }] 
-    });
+//     // Check if company already exists
+//     const existingCompany = await Company.findOne({ 
+//       $or: [{ email }, { registrationNumber }] 
+//     });
     
-    if (existingCompany) {
-      return response.status(400).json({ 
-        success: false, 
-        message: "Company with this email or registration number already exists" 
-      });
-    }
+//     if (existingCompany) {
+//       return response.status(400).json({ 
+//         success: false, 
+//         message: "Company with this email or registration number already exists" 
+//       });
+//     }
 
-    // Create company
-    const company = await Company.create({
-      name,
-      email,
-      phone,
-      address,
-      registrationNumber,
-    });
+//     // Create company
+//     const company = await Company.create({
+//       name,
+//       email,
+//       phone,
+//       address,
+//       registrationNumber,
+//     });
 
-    return response.status(201).json({
-      success: true,
-      message: "Company registered successfully",
-      data: {
-        id: company._id,
-        name: company.name,
-        email: company.email,
-      },
-    });
+//     return response.status(201).json({
+//       success: true,
+//       message: "Company registered successfully",
+//       data: {
+//         id: company._id,
+//         name: company.name,
+//         email: company.email,
+//       },
+//     });
 
-  } catch (error) {
-    console.error("Company Creation Error:", error);
-    return response.status(500).json({ 
-      success: false, 
-      message: "Internal server error" 
-    });
-  }
-}
+//   } catch (error) {
+//     console.error("Company Creation Error:", error);
+//     return response.status(500).json({ 
+//       success: false, 
+//       message: "Internal server error" 
+//     });
+//   }
+// }
 
 // User account creation
 export async function user_account_Creation(request, response) {
@@ -125,6 +126,8 @@ export async function user_account_Creation(request, response) {
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
+
+
     // Create user
     const user = await User.create({
       email,
@@ -140,6 +143,11 @@ export async function user_account_Creation(request, response) {
       JWT_SECRET,
       { expiresIn: "7d" }
     );
+
+
+    await sendVerificationEmail(user.email, token);
+
+
 
     return response.status(201).json({
       success: true,
@@ -162,6 +170,35 @@ export async function user_account_Creation(request, response) {
     });
   }
 }
+
+
+
+
+
+export const userEmailVerification = async (req, res) => {
+  try {
+    const { token } = req.params;
+    
+    // Verify token
+    const decoded = jwt.verify(token, JWT_SECRET);
+    const userId = decoded.userId;  
+    // Find user
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+
+    // Update email verification status
+    user.isEmailverified = true;
+    await user.save();
+    
+    return res.status(200).json({ success: true, message: "Email verified successfully" });
+  } catch (error) {
+    console.error("Email Verification Error:", error);
+    return res.status(500).json({ success: false, message: "Internal server error" });
+  }
+}
+
 
 // User sign in
 export async function user_signin(request, response) {
