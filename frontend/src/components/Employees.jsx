@@ -1,9 +1,8 @@
 import { Search, Plus, Mail, Phone, Plane } from "lucide-react";
-import Layout from "./Layout";
-import Button from "./Button";
-import Input from "./Input";
-import { Avatar } from "./Avatar";
-
+import Layout from "../ui/Layout.jsx"
+import Avatar  from "../ui/Avatar.jsx";
+import Button from "../ui/Button.jsx";
+import Input from "../ui/Input.jsx";
 const employees = [
   {
     id: 1,
