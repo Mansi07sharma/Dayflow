@@ -39,49 +39,49 @@ function authorize(req, res) {
 
 
 // Company account creation
-export async function create_company_account(request, response) {
-  try {
-    const { name, email, phone, address, registrationNumber } = request.body;
+// export async function create_company_account(request, response) {
+//   try {
+//     const { name, email, phone, address, registrationNumber } = request.body;
 
-    // Check if company already exists
-    const existingCompany = await Company.findOne({ 
-      $or: [{ email }, { registrationNumber }] 
-    });
+//     // Check if company already exists
+//     const existingCompany = await Company.findOne({ 
+//       $or: [{ email }, { registrationNumber }] 
+//     });
     
-    if (existingCompany) {
-      return response.status(400).json({ 
-        success: false, 
-        message: "Company with this email or registration number already exists" 
-      });
-    }
+//     if (existingCompany) {
+//       return response.status(400).json({ 
+//         success: false, 
+//         message: "Company with this email or registration number already exists" 
+//       });
+//     }
 
-    // Create company
-    const company = await Company.create({
-      name,
-      email,
-      phone,
-      address,
-      registrationNumber,
-    });
+//     // Create company
+//     const company = await Company.create({
+//       name,
+//       email,
+//       phone,
+//       address,
+//       registrationNumber,
+//     });
 
-    return response.status(201).json({
-      success: true,
-      message: "Company registered successfully",
-      data: {
-        id: company._id,
-        name: company.name,
-        email: company.email,
-      },
-    });
+//     return response.status(201).json({
+//       success: true,
+//       message: "Company registered successfully",
+//       data: {
+//         id: company._id,
+//         name: company.name,
+//         email: company.email,
+//       },
+//     });
 
-  } catch (error) {
-    console.error("Company Creation Error:", error);
-    return response.status(500).json({ 
-      success: false, 
-      message: "Internal server error" 
-    });
-  }
-}
+//   } catch (error) {
+//     console.error("Company Creation Error:", error);
+//     return response.status(500).json({ 
+//       success: false, 
+//       message: "Internal server error" 
+//     });
+//   }
+// }
 
 // User account creation
 export async function user_account_Creation(request, response) {
