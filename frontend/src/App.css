@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+body {
+  @apply bg-[#020617] text-white;
+}
+
+.stat-card {
+  @apply bg-gradient-to-br from-slate-900 to-slate-800 
+  rounded-2xl p-6 shadow-lg border border-slate-700;
+}
+
+.section-card {
+  @apply bg-gradient-to-br from-slate-900 to-slate-800 
+  rounded-2xl p-6 shadow-lg border border-slate-700;
+}
+
+.action-card {
+  @apply bg-gradient-to-br from-slate-900 to-slate-800 
+  rounded-xl p-6 border border-slate-700 
+  hover:scale-105 transition cursor-pointer;
+}
