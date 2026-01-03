@@ -52,6 +52,9 @@ const userSchema = new mongoose.Schema(
     department: { type: String },
     location: { type: String },
     dateOfJoining: { type: Date },
+    nationality : {type : String},
+    martialstatus : {type : String},
+    dateOfBirth : {type : Date},
 
     // Bank & IDs
     panNo: { type: String },
@@ -66,6 +69,10 @@ const userSchema = new mongoose.Schema(
       ref: "Company",
       required: true,
     },
+    attendanceStatus : {
+      type : mongoose.Schema.Types.ObjectId,
+      ref : "Attendance"
+    }
   },
   { timestamps: true }
 );
